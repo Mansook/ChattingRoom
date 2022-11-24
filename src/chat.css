@@ -1,0 +1,18 @@
+.box {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  width: 300px;
+
+  border: none;
+  border-radius: 5px;
+  background-color: gray;
+}
+
+.alert {
+  color: white;
+}
+
+.me {
+  background-color: yellow;
+}
