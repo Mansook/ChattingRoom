@@ -6,14 +6,20 @@ import { socket } from "../socket/socket";
 import {
   receiveChat,
   selectChatList,
+  selectError,
+  selectTurn,
+  sendChat,
   socketLogged,
 } from "../module/slice/chat";
+import { findWordInDic } from "../api/dictionary/dic";
 
 const ChatContainer = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const name = searchParams.get("name");
   const dispatch = useDispatch();
   const chatList = useSelector(selectChatList);
+  const error = useSelector(selectError);
+  const turn = useSelector(selectTurn);
 
   useEffect(() => {
     socket.emit("enter chatroom", name);
@@ -33,7 +39,6 @@ const ChatContainer = () => {
     console.log(chatList);
   }, [chatList]);
   const onSend = (chat) => {
-    console.log(chat);
     socket.emit("send chat", {
       type: "message",
       socketId: socket.id,
@@ -41,7 +46,14 @@ const ChatContainer = () => {
       regData: Date.now(),
     });
   };
-  return <Chat socketId={socket.id} chatList={chatList} onSend={onSend} />;
+  return (
+    <Chat
+      error={error}
+      socketId={socket.id}
+      chatList={chatList}
+      onSend={onSend}
+    />
+  );
 };
 
 export default ChatContainer;

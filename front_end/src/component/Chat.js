@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../chat.css";
 
-const Chat = ({ socketId, chatList, onSend }) => {
+const Chat = ({ error, socketId, chatList, onSend }) => {
   const [write, setWrite] = useState("");
   const onChange = (e) => {
     setWrite(e.target.value);
@@ -25,6 +25,7 @@ const Chat = ({ socketId, chatList, onSend }) => {
           ))}
         </ul>
       </div>
+      <div style={{ color: "red" }}>{error}</div>
       <div>
         <input onChange={onChange} value={write} placeholder="ㅋㅋ" />
         <button
