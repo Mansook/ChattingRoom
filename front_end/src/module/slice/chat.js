@@ -35,15 +35,24 @@ export function* findWordSaga() {
 const chatSlice = createSlice({
   name: "chat",
   initialState: {
+    member: [],
     chatList: [],
     socketId: null,
-    turn: "",
+    turn: -1,
     currentWord: "",
     inputWord: "",
     success: null,
     error: "",
   },
   reducers: {
+    updateMember: (state, action) => ({
+      ...state,
+      member: action.payload,
+    }),
+    updateTurn: (state, action) => ({
+      ...state,
+      turn: action.payload,
+    }),
     setError: (state, action) => ({ ...state, error: action.payload }),
     setInputWord: (state, action) => {
       state.inputWord = action.payload;
@@ -58,6 +67,7 @@ const chatSlice = createSlice({
         if (back === front) {
           state.currentWord = state.inputWord;
           state.error = "";
+          state.turn++;
         } else {
           state.error = "틀린 단어임둥ㅋ";
         }
@@ -83,6 +93,8 @@ const chatSlice = createSlice({
 });
 
 export const {
+  updateTurn,
+  updateMember,
   setInputWord,
   setCurrentWord,
   socketLogged,
@@ -95,4 +107,6 @@ export const selectChatList = (state) => state.chat.chatList;
 export const selectCurrentWord = (state) => state.chat.currentWord;
 export const selectError = (state) => state.chat.error;
 export const selectTurn = (state) => state.chat.turn;
+export const selectMember = (state) => state.chat.member;
+export const selectSocketId = (state) => state.chat.socketId;
 export default chatSlice.reducer;
