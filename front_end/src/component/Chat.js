@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import "../chat.css";
 
-const Chat = ({ error, socketId, chatList, onSend }) => {
+const Chat = ({ turn, error, socketId, chatList, onSend }) => {
   const [write, setWrite] = useState("");
+
   const onChange = (e) => {
     setWrite(e.target.value);
   };
   return (
     <div>
       <div>
-        <ul>
+        <ul className={error ? "error" : "correct"}>
           {chatList.map((c) => (
             <li
               className={
@@ -26,6 +27,7 @@ const Chat = ({ error, socketId, chatList, onSend }) => {
         </ul>
       </div>
       <div style={{ color: "red" }}>{error}</div>
+      <div>{turn ? <div>내차례!</div> : <div />}</div>
       <div>
         <input onChange={onChange} value={write} placeholder="ㅋㅋ" />
         <button

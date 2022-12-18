@@ -16,3 +16,20 @@
 .me {
   background-color: yellow;
 }
+
+@keyframes vibration {
+  from {
+    transform: rotate(1deg);
+  }
+  to {
+    transform: rotate(-1deg);
+  }
+}
+
+.error li:last-child{
+  background-color: red;
+}
+.error li:last-child.vibration{
+  animation:vibration 0.1s infinite;
+}
+

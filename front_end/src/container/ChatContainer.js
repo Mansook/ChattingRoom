@@ -28,10 +28,10 @@ const ChatContainer = () => {
   const socketData = useSelector(selectSocketId);
 
   useEffect(() => {
-    socket.emit("enter chatroom", name);
     socket.on("my socket id", (data) => {
       dispatch(socketLogged({ name: name, id: data.socketId }));
     });
+    socket.emit("enter chatroom", name);
   }, []);
 
   useEffect(() => {
@@ -39,25 +39,19 @@ const ChatContainer = () => {
   }, [member]);
 
   useEffect(() => {
-    console.log(idx);
-  }, [idx]);
-  useEffect(() => {
     socket.on("member update", (data) => {
       dispatch(updateMember(data));
     });
     socket.on("receive chat", (data) => {
-      dispatch(receiveChat(data));
+      dispatch(receiveChat({ ...data, error: false }));
       console.log(data);
-
-      if (data.turn === 0) {
-        dispatch(updateTurn(data.turn));
-      }
+    });
+    socket.on("start game", (data) => {
+      console.log(data);
+      dispatch(receiveChat(data));
+      dispatch(updateTurn(data.turn));
     });
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log(member);
-  }, [member]);
 
   const onSend = (chat) => {
     socket.emit("send chat", {
@@ -68,9 +62,10 @@ const ChatContainer = () => {
       regData: Date.now(),
     });
   };
+
   return (
     <Chat
-      turn={turn % member}
+      turn={turn % member.length === idx}
       error={error}
       message={message}
       socketId={socket.id}

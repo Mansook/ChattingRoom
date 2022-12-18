@@ -60,6 +60,7 @@ const chatSlice = createSlice({
     setCurrentWord: (state, action) => {
       if (state.currentWord === "") {
         state.currentWord = state.inputWord;
+        state.turn += 1;
       } else {
         let back = state.currentWord.word.slice(-1);
         let front = state.inputWord.word[0];
@@ -67,7 +68,7 @@ const chatSlice = createSlice({
         if (back === front) {
           state.currentWord = state.inputWord;
           state.error = "";
-          state.turn++;
+          state.turn += 1;
         } else {
           state.error = "틀린 단어임둥ㅋ";
         }
