@@ -23,7 +23,7 @@ const findInDicSaga = function* (action) {
         );
         yield put(setCurrentWord());
       } else {
-        yield put(setError("그런단어 없슴둥ㅋ"));
+        yield put(setError("그런단어 없음"));
       }
     } catch (e) {
       console.log(e);
@@ -70,7 +70,7 @@ const chatSlice = createSlice({
           state.error = "";
           state.turn += 1;
         } else {
-          state.error = "틀린 단어임둥ㅋ";
+          state.error = "틀린 단어";
         }
       }
       state.inputWord = "";

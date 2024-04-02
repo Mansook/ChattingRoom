@@ -29,7 +29,7 @@ const Chat = ({ turn, error, socketId, chatList, onSend }) => {
       <div style={{ color: "red" }}>{error}</div>
       <div>{turn ? <div>내차례!</div> : <div />}</div>
       <div>
-        <input onChange={onChange} value={write} placeholder="ㅋㅋ" />
+        <input onChange={onChange} value={write} placeholder="입력" />
         <button
           onClick={() => {
             onSend(write);
