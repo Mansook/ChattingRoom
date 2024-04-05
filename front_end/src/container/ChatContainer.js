@@ -9,11 +9,8 @@ import {
   selectError,
   selectMember,
   selectSocketId,
-  selectTurn,
-  sendChat,
   socketLogged,
-  updateMember,
-  updateTurn,
+  updateMember
 } from "../module/slice/chat";
 const ChatContainer = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,7 +20,6 @@ const ChatContainer = () => {
   const dispatch = useDispatch();
   const chatList = useSelector(selectChatList);
   const error = useSelector(selectError);
-  const turn = useSelector(selectTurn);
   const member = useSelector(selectMember);
   const socketData = useSelector(selectSocketId);
 
@@ -46,11 +42,6 @@ const ChatContainer = () => {
       dispatch(receiveChat({ ...data, error: false }));
       console.log(data);
     });
-    socket.on("start game", (data) => {
-      console.log(data);
-      dispatch(receiveChat(data));
-      dispatch(updateTurn(data.turn));
-    });
   }, [dispatch]);
 
   const onSend = (chat) => {
@@ -65,7 +56,7 @@ const ChatContainer = () => {
 
   return (
     <Chat
-      turn={turn % member.length === idx}
+      name={name}
       error={error}
       message={message}
       socketId={socket.id}

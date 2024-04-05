@@ -29,14 +29,7 @@ io.on("connection", (socket) => {
       regDate: Date.now(),
     });
 
-    if (member.length >= 2) {
-      io.emit("start game", {
-        type: "alert",
-        chat: "끝말잇기 시작",
-        regDate: Date.now(),
-        turn: 0,
-      });
-    } else {
+    if (member.length == 1) {
       io.emit("receive chat", {
         type: "alert",
         chat: "다른 사람을 기다리는중..",
