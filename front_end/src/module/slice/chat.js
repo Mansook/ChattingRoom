@@ -1,17 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { call, put, takeLatest } from "redux-saga/effects";
+import OpenAI from "openai";
+
+
+const openai = new OpenAI({
+  apiKey: "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", dangerouslyAllowBrowser: true
+});
+async function censor() {
+  const completion = await openai.chat.completions.create({
+    messages: [{ role: "user", content: "You are a helpful assistant." }],
+    model: "gpt-3.5-turbo",
+  });
+  const answer = completion.choices[0].message.content;
+  console.log(completion.choices[0]);
+  return answer;
+}
 
 const findInDicSaga = function* (action) {
   if (action.payload.type === "message")
     try {
       const word = action.payload.chat;
-      yield put(setInputWord({word:word}));
+      const chatgpt = yield call(censor, word); // censor 함수 실행을 기다림
+      yield put(setInputWord({chatgpt: chatgpt}));
+      console.log(chatgpt);
     } catch (e) {
       console.log(e);
     }
 };
+
 export function* findWordSaga() {
   yield takeLatest(receiveChat, findInDicSaga);
+  console.log("test");
 }
 const chatSlice = createSlice({
   name: "chat",
