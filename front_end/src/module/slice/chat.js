@@ -12,7 +12,7 @@ async function censor() {
     model: "gpt-3.5-turbo",
   });
   const answer = completion.choices[0].message.content;
-  console.log(completion.choices[0]);
+  //console.log(completion.choices[0]);
   return answer;
 }
 
@@ -21,8 +21,11 @@ const findInDicSaga = function* (action) {
     try {
       const word = action.payload.chat;
       const chatgpt = yield call(censor, word); // censor 함수 실행을 기다림
-      yield put(setInputWord({chatgpt: chatgpt}));
-      console.log(chatgpt);
+      yield put(setInputWord({
+        word:word,
+        gpt: chatgpt
+      }));
+      yield put(setChatList());
     } catch (e) {
       console.log(e);
     }
@@ -30,7 +33,6 @@ const findInDicSaga = function* (action) {
 
 export function* findWordSaga() {
   yield takeLatest(receiveChat, findInDicSaga);
-  console.log("test");
 }
 const chatSlice = createSlice({
   name: "chat",
@@ -54,12 +56,9 @@ const chatSlice = createSlice({
     setInputWord: (state, action) => {
       state.inputWord = action.payload;
     },
-    setCurrentWord: (state, action) => {
-      if (state.currentWord === "") {
-        state.currentWord = state.inputWord;
-      }
-      state.currentWord = state.inputWord;
-      state.error = "";
+    setChatList: (state, action) => {
+      state.chatList[state.chatList.length-1].word=state.inputWord.word;
+      state.chatList[state.chatList.length-1].gpt=state.inputWord.gpt;
       state.inputWord = "";
     },
     socketLogged: (state, action) => ({
@@ -83,7 +82,7 @@ const chatSlice = createSlice({
 export const {
   updateMember,
   setInputWord,
-  setCurrentWord,
+  setChatList,
   socketLogged,
   sendChat,
   receiveChat,

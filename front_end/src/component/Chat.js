@@ -3,7 +3,7 @@ import "../chat.css";
 
 const Chat = ({ name, error, socketId, chatList, onSend }) => {
   const [write, setWrite] = useState("");
-
+  console.log(chatList);
   const onChange = (e) => {
     setWrite(e.target.value);
   };
@@ -12,9 +12,9 @@ const Chat = ({ name, error, socketId, chatList, onSend }) => {
       <div>
         <ul>
           {chatList.map((c) => (
-            <li>
+            <li className="box">
              {(c.type == "alert")?
-              c.chat:c.name+"  "+c.chat}
+              c.chat:c.name+" : "+c.chat+"gpt : "+c.gpt}
             </li>
           ))}
         </ul>

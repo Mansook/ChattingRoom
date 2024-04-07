@@ -40,7 +40,7 @@ const ChatContainer = () => {
     });
     socket.on("receive chat", (data) => {
       dispatch(receiveChat({ ...data, error: false }));
-      console.log(data);
+      //console.log(data);
     });
   }, [dispatch]);
 
