@@ -16,6 +16,7 @@ const ChatContainer = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [idx, setIdx] = useState(-1);
   const [message, setMessage] = useState("");
+  const [members,setMembers]=useState([]);
   const name = searchParams.get("name");
   const dispatch = useDispatch();
   const chatList = useSelector(selectChatList);
@@ -24,6 +25,7 @@ const ChatContainer = () => {
   const socketData = useSelector(selectSocketId);
 
   useEffect(() => {
+    console.log(socket);
     socket.on("my socket id", (data) => {
       dispatch(socketLogged({ name: name, id: data.socketId }));
     });
@@ -31,6 +33,7 @@ const ChatContainer = () => {
   }, []);
 
   useEffect(() => {
+    setMembers(member);
     setIdx(member.findIndex((e) => e.id === socketData.id));
   }, [member]);
 
@@ -62,6 +65,7 @@ const ChatContainer = () => {
       socketId={socket.id}
       chatList={chatList}
       onSend={onSend}
+      member={members}
     />
   );
 };

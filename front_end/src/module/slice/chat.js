@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { call, put, takeLatest } from "redux-saga/effects";
+import { filter_text } from "../../lib/api/filter";
 import OpenAI from "openai";
 
 
@@ -20,10 +21,11 @@ const findInDicSaga = function* (action) {
   if (action.payload.type === "message")
     try {
       const word = action.payload.chat;
-      const chatgpt = yield call(censor, word); // censor 함수 실행을 기다림
+      const chatgpt = yield call(filter_text, {text:word,});
+      console.log(chatgpt); // censor 함수 실행을 기다림
       yield put(setInputWord({
-        word:word,
-        gpt: chatgpt
+        word: chatgpt.text,
+        gpt: chatgpt.filtered
       }));
       yield put(setChatList());
     } catch (e) {

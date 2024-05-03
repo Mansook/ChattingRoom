@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "../chat.css";
 
-const Chat = ({ name, error, socketId, chatList, onSend }) => {
+const Chat = ({ name, error, socketId, chatList, onSend ,member}) => {
   const [write, setWrite] = useState("");
-  console.log(chatList);
+ 
   const onChange = (e) => {
     setWrite(e.target.value);
   };
@@ -29,6 +29,16 @@ const Chat = ({ name, error, socketId, chatList, onSend }) => {
         >
           제출
         </button>
+      </div>
+      <div>
+        참여자
+        <ul>
+          {member.map((c)=>(
+            <li className="box">
+              {c.name}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

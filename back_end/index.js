@@ -1,21 +1,28 @@
 const express = require("express");
 const app = express();
 const server = require("http").Server(app);
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
+const io = require("socket.io")(server,{
+  cors:{
+    origin:"http://localhost:3000",
+    credentials: true
+  }
 });
+//console.log(io);
+
 const port = process.env.PORT || 8000;
 
 server.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello, World!");
+});
+
 let member = [];
 
 io.on("connection", (socket) => {
+  console.log(socket.id);
   io.to(socket.id).emit("my socket id", { socketId: socket.id });
 
   socket.on("enter chatroom", (name) => {
