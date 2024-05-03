@@ -1,9 +1,23 @@
 const express = require("express");
+const cors=require("cors");
 const app = express();
+
+app.use((req, res, next) => {
+  const corsWhitelist = [
+      "https://bb15-112-150-250-55.ngrok-free.app"
+  ];
+  if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
+      res.header('Access-Control-Allow-Origin', req.headers.origin);
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  }
+  next();
+});
+
+
 const server = require("http").Server(app);
 const io = require("socket.io")(server,{
   cors:{
-    origin: "http://localhost:3000",
+    origin : "https://bb15-112-150-250-55.ngrok-free.app",
     allowedHeaders: ["my-custom-header"],
     credentials: true
   }
