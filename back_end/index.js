@@ -1,7 +1,7 @@
 const express = require("express");
 const cors=require("cors");
 const app = express();
-
+/*
 app.use((req, res, next) => {
   const corsWhitelist = [
       "https://bb15-112-150-250-55.ngrok-free.app"
@@ -23,7 +23,13 @@ const io = require("socket.io")(server,{
   }
 });
 //console.log(io);
-
+*/
+const server = require("http").Server(app);
+const io = require("socket.io")(server,{
+  cors:{
+    origin : "http://localhost:3000"
+  }
+});
 const port = process.env.PORT || 8000;
 
 server.listen(port, () => {

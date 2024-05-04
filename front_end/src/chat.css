@@ -1,29 +1,102 @@
-.box {
-  border: 2px solid gray;
+body{
+  -ms-overflow-style: none;
+  }
+  
+ ::-webkit-scrollbar {
+   display: none;
+ }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.chat-box {
+  flex-grow: 1;
+  background-color: #fff;
+  border-radius: 8px;
+  height: 400px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* 수직 스크롤이 필요할 때만 나타나도록 설정 */
+  -ms-overflow-style: none;
+}
+.chat-box::-webkit-scrollbar{
+  display:none;
+}
+
+
+.chat-box ul {
+  list-style-type: none;
+  padding: 10px;
+  margin: 0; /* 리스트의 기본 마진 제거 */
+}
+
+.message {
+
+  border-radius: 20px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background-color: #b2dffb;
+}
+
+.message.my {
+  background-color: #a8b4b44a
+}
+.message.alert {
+  background-color: #ffcccc;
+  
+}
+
+.message.self {
+  background-color: #b2dffb;
+  align-self: flex-end;
+}
+.input {
+  display: flex;
+}
+.input-box, .participants {
+  margin-top: 20px;
+  display: flex; /* 채팅창과 입력창, 참여자 목록 사이에 여백 추가 */
+}
+
+.input-box input {
+  width: calc(100% - 100px);
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.input-box button {
+  padding: 8px 16px;
+  background-color: #3897f0;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.input-box button:hover {
+  background-color: #2680eb;
+}
+
+.participants h2 {
+  margin-top: 0;
+}
+
+.participants ul {
+  list-style-type: none;
+  padding: 10px;
+  margin: 2; /* 리스트의 기본 마진 제거 */
+}
+
+.participant {
+  display: inline-flex;
+  padding: 5px;
+  margin: 4px;
   border-radius: 5px;
+  background-color: #b2dffb;
+  margin-bottom: 5px;
 }
-
-.alert {
-  color: white;
-}
-
-.me {
-  background-color: yellow;
-}
-
-@keyframes vibration {
-  from {
-    transform: rotate(1deg);
-  }
-  to {
-    transform: rotate(-1deg);
-  }
-}
-
-.error li:last-child{
-  background-color: red;
-}
-.error li:last-child.vibration{
-  animation:vibration 0.1s infinite;
-}
-
