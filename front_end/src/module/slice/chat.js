@@ -22,10 +22,9 @@ const findInDicSaga = function* (action) {
     try {
       const word = action.payload.chat;
       const chatgpt = yield call(filter_text, {"chat": word, "api_key": "4336a62ab2069cee31110575ac69c0dc", "option": 0});
-      console.log(chatgpt); // censor 함수 실행을 기다림
       yield put(setInputWord({
         word: chatgpt.text,
-        gpt: chatgpt.filtered
+        gpt: chatgpt.result==undefined?chatgpt:chatgpt.result
       }));
       yield put(setChatList());
     } catch (e) {
