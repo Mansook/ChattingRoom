@@ -1,10 +1,11 @@
 const express = require("express");
 const cors=require("cors");
 const app = express();
-/*
+
+
 app.use((req, res, next) => {
   const corsWhitelist = [
-      "https://93d5-2001-2d8-ef4b-3bb0-cd4f-d967-6d55-8d92.ngrok-free.app"
+      "https://48c1-112-150-250-55.ngrok-free.app","http://localhost:3000"
   ];
   if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
       res.header('Access-Control-Allow-Origin', req.headers.origin);
@@ -15,23 +16,24 @@ app.use((req, res, next) => {
 const server = require("http").Server(app);
 const io = require("socket.io")(server,{
   cors:{
-    origin : "https://93d5-2001-2d8-ef4b-3bb0-cd4f-d967-6d55-8d92.ngrok-free.app",
+    origin : ["https://48c1-112-150-250-55.ngrok-free.app","http://localhost:3000"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
+  }
+});
+
+//console.log(io);
+/*
+const server = require("http").Server(app);
+const io = require("socket.io")(server,{
+  cors:{
+    origin : "http://localhost:3000",
+
     allowedHeaders: ["my-custom-header"],
     credentials: true
   }
 });
 */
-//console.log(io);
-
-const server = require("http").Server(app);
-const io = require("socket.io")(server,{
-  cors:{
-    origin : "http://localhost:3000",
-    allowedHeaders: ["my-custom-header"],
-    credentials: true
-  }
-});
-
 const port = process.env.PORT || 8000;
 
 server.listen(port, () => {
@@ -39,7 +41,7 @@ server.listen(port, () => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Hello, World!");
+  res.send("https://48c1-112-150-250-55.ngrok-free.app/?name=이름 으로 접속해주세요");
 });
 
 let member = [];

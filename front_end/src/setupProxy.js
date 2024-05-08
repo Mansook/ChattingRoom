@@ -4,11 +4,12 @@ module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target:"http://localhost:4444",
+      target: "http://localhost:4440",
       changeOrigin: true,
     })
   );
 };
+//http://218.239.229.119:4440
 /*
 module.exports = function (app) {
   app.use(

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-
+import {Helmet, HelmetProvider} from 'react-helmet-async';
 import { store } from "./store/config";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -12,7 +12,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <HelmetProvider>
+      
+        <App />
+
+      </HelmetProvider>
     </BrowserRouter>
   </Provider>
 );

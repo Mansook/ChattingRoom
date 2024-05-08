@@ -8,11 +8,13 @@ import {
   receiveChat,
   selectChatList,
   selectError,
+  selectInputWord,
   selectMember,
   selectSocketId,
   socketLogged,
   updateMember
 } from "../module/slice/chat";
+import { Helmet } from "react-helmet-async";
 const ChatContainer = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [idx, setIdx] = useState(-1);
@@ -24,6 +26,7 @@ const ChatContainer = () => {
   const error = useSelector(selectError);
   const member = useSelector(selectMember);
   const socketData = useSelector(selectSocketId);
+  const returnData=useSelector(selectInputWord);
 
   useEffect(() => {
     console.log(socket);
@@ -32,6 +35,10 @@ const ChatContainer = () => {
     });
     socket.emit("enter chatroom", name);
   }, []);
+
+  useEffect(()=>{
+    //console.log(returnData);
+  },[chatList]);
 
   useEffect(() => {
     setMembers(member);
@@ -46,7 +53,7 @@ const ChatContainer = () => {
       dispatch(receiveChat({ ...data, error: false }));
       //console.log(data);
     });
-  }, [dispatch]);
+  }, [dispatch,message]);
 
   const onSend = (chat) => {
     socket.emit("send chat", {
@@ -59,15 +66,23 @@ const ChatContainer = () => {
   };
 
   return (
-    <Chat
-      name={name}
-      error={error}
-      message={message}
-      socketId={socket.id}
-      chatList={chatList}
-      onSend={onSend}
-      member={members}
-    />
+    <div>
+    <Helmet>
+    <meta 
+  http-equiv="Content-Security-Policy"
+  content="upgrade-insecure-requests"
+/>
+    </Helmet>
+      <Chat
+        name={name}
+        error={error}
+        message={message}
+        socketId={socket.id}
+        chatList={chatList}
+        onSend={onSend}
+        member={members}
+      />
+    </div>
   );
 };
 

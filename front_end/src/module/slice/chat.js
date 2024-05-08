@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { filter_text } from "../../lib/api/filter";
 import OpenAI from "openai";
 
@@ -22,18 +22,20 @@ const findInDicSaga = function* (action) {
     try {
       const word = action.payload.chat;
       const chatgpt = yield call(filter_text, {"chat": word, "api_key": "4336a62ab2069cee31110575ac69c0dc", "option": 0});
+      const reg=action.payload;
+      console.log(reg);
       yield put(setInputWord({
-        word: chatgpt.text,
-        gpt: chatgpt.result==undefined?chatgpt:chatgpt.result
+        gpt: chatgpt.result,
+        reg: action.payload.regData,
       }));
-      yield put(setChatList());
+      yield put(setChatList(action.payload.regData));
     } catch (e) {
       console.log(e);
     }
 };
 
 export function* findWordSaga() {
-  yield takeLatest(receiveChat, findInDicSaga);
+  yield takeEvery(receiveChat, findInDicSaga);
 }
 const chatSlice = createSlice({
   name: "chat",
@@ -41,7 +43,7 @@ const chatSlice = createSlice({
     member: [],
     chatList: [],
     socketId: null,
-    turn: -1,
+    regData:0,
     currentWord: "",
     inputWord: "",
     success: null,
@@ -55,11 +57,16 @@ const chatSlice = createSlice({
     
     setError: (state, action) => ({ ...state, error: action.payload }),
     setInputWord: (state, action) => {
+      console.log(action.payload);
       state.inputWord = action.payload;
     },
     setChatList: (state, action) => {
-      state.chatList[state.chatList.length-1].word=state.inputWord.word;
-      state.chatList[state.chatList.length-1].gpt=state.inputWord.gpt;
+   
+      const index = state.chatList.findIndex(item => item.regData === action.payload);
+   
+      console.log(index);
+    
+      state.chatList[index].gpt=state.inputWord.gpt;
       state.inputWord = "";
     },
     socketLogged: (state, action) => ({
@@ -95,4 +102,5 @@ export const selectCurrentWord = (state) => state.chat.currentWord;
 export const selectError = (state) => state.chat.error;
 export const selectMember = (state) => state.chat.member;
 export const selectSocketId = (state) => state.chat.socketId;
+export const selectInputWord=(state)=>state.chat.inputWord;
 export default chatSlice.reducer;

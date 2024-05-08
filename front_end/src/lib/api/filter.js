@@ -11,8 +11,6 @@ export const GenerateKey = async(name) => {
 };
 
 export const filter_text=async(input)=>{
-    console.log(input);
     const response=await client.post("api/receive_json",input);
-    console.log(response);
     return response.data;
 }
