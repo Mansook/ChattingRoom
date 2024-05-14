@@ -5,7 +5,7 @@ const app = express();
 
 app.use((req, res, next) => {
   const corsWhitelist = [
-      "https://48c1-112-150-250-55.ngrok-free.app","http://localhost:3000"
+      "https://60d0-112-150-250-55.ngrok-free.app","http://localhost:3000"
   ];
   if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
       res.header('Access-Control-Allow-Origin', req.headers.origin);
@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 const server = require("http").Server(app);
 const io = require("socket.io")(server,{
   cors:{
-    origin : ["https://48c1-112-150-250-55.ngrok-free.app","http://localhost:3000"],
+    origin : ["https://60d0-112-150-250-55.ngrok-free.app","http://localhost:3000"],
     allowedHeaders: ["my-custom-header"],
     credentials: true
   }
