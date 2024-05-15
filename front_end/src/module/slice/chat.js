@@ -9,14 +9,15 @@ const findInDicSaga = function* (action) {
     try {
       console.log(action.payload.option);
       console.time("api");
+      const payload=action.payload
       const word = action.payload.chat;
       const chatgpt = yield call(filter_text, {"chat": word, "api_key": "4336a62ab2069cee31110575ac69c0dc", "option": action.payload.option});
       const reg=action.payload;
       yield put(setInputWord({
         gpt: chatgpt.result,
-        reg: action.payload.regData,
+        ...payload
       }));
-      yield put(setChatList(action.payload.regData));
+      //yield put(setChatList(action.payload.regData));
       console.timeEnd("api");
     } catch (e) {
       console.log(e);
@@ -32,10 +33,6 @@ const chatSlice = createSlice({
     member: [],
     chatList: [],
     socketId: null,
-    regData:0,
-    currentWord: "",
-    inputWord: "",
-    success: null,
     error: "",
     option: 0,  
   },
@@ -46,16 +43,16 @@ const chatSlice = createSlice({
     }),
     
     setError: (state, action) => ({ ...state, error: action.payload }),
-    setInputWord: (state, action) => {
+    setInputWord: (state, action) => ({
       //console.log(action.payload);
-      state.inputWord = action.payload;
-    },
+      ...state,
+      chatList: [...state.chatList, action.payload],
+    }),
     setChatList: (state, action) => {
-   
-      const index = state.chatList.findIndex(item => item.regData === action.payload);
-    
+      /*const index = state.chatList.findIndex(item => item.regData === action.payload);
+      console.log(index);
       state.chatList[index].gpt=state.inputWord.gpt;
-      state.inputWord = "";
+      state.inputWord = "";*/
     },
     socketLogged: (state, action) => ({
       ...state,
@@ -66,7 +63,6 @@ const chatSlice = createSlice({
     }),
     receiveChat: (state, action) => ({
       ...state,
-      chatList: [...state.chatList, action.payload],
     }),
     clearChat: (state, action) => ({
       ...state,
