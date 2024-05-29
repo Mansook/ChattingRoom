@@ -17,10 +17,12 @@ const findInDicSaga = function* (action) {
         gpt: chatgpt.result,
         ...payload
       }));
-      //yield put(setChatList(action.payload.regData));
       console.timeEnd("api");
     } catch (e) {
       console.log(e);
+      yield put(setInputWord({
+        ...action.payload
+      }));
     }
 };
 
