@@ -40,8 +40,13 @@ const Chat = ({ name, error, socketId, chatList, onSend ,member,onChangeOption})
       <ul>
         {chatList.map((c) => (
   <li className={`message ${c.type === "alert" ? "alert" : ""} ${name === c.name ? "my" : ""}`}>
-    {(c.type === "alert") ? c.chat : `${c.name}  :  ${c.chat} (GPT: ${c.gpt})`}
-  </li>
+    {c.type==="alert" ? c.chat :
+      (c.gpt === undefined ? `${c.name} : ${c.chat}` :
+      (c.gpt === "0" ? `${c.name} : ${c.chat}` : `${c.name} : ${c.gpt}`))}
+
+</li>
+
+
 ))}
         <li ref={messageEndRef}></li>
       </ul>
