@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Filchatter</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
+        <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+        <style>
+            #korean-button {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                font-size: 14px;
+            }
+            .hr1 {
+                border-top: 10px solid var(--h1-color);
+            }
+            .copyable {
+                cursor: pointer;
+            }
+        </style>
+        <script>
+            function copyToClipboard(text) {
+                const el = document.createElement('textarea');
+                el.value = text;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                alert('클립보드에 복사 되었습니다.');
+            }
+        </script>
+    </head>
+    <body>
+        <main class="container">
+            <h1 onclick="location.href='/'">Filchatter</h1>
+            <nav>
+                <button onclick="location.href='/'">Home</button>
+                <button onclick="location.href='/generate_key'">API</button>
+                <button onclick="location.href='/documents'">Documents</button>
+            </nav>
+            <h1>Documents</h1>
+            <div>
+                <h2>Purpose</h2>
+            <h4>This project aims to enhance user convenience by analyzing whether certain text requires censorship and censoring it using the ChatGPT API. It functions as a text censorship service that goes beyond conventional structured filtering to censor text that cannot be filtered by existing means and even offensive text. Despite the need for censorship of inappropriate content, it often goes unfiltered.</h4>
+            </div>
+            <hr class="hr1">
+            <div>
+                <h2>How to use?</h2>
+                <h3>- Python</h3>
+                <h4>
+                    <p>0. It may run on Python.</p>
+                    <hr>
+                    <p>1. Install Filchatter. (Click code to copy)</p>
+                    <pre class="copyable" title="Click code to copy!" onclick="copyToClipboard('pip install filchatter')"><code class="language-shell">pip install filchatter</code></pre>
+                    <p></p>
+                    <hr>
+                    <p>2. Import Filchatter. (Click code to copy)</p>
+                    <pre class="copyable" title="Click code to copy!" onclick="copyToClipboard('from Filchatter import Filchatter')"><code class="language-python">from Filchatter import Filchatter</code></pre>
+                    <p></p>
+                    <hr>
+                    <p>3. Get API key at website.<a href='/generate_key'> Get API key</a></p> 
+                    <hr>
+                    <p>4. Create Filchatter instance and set your API key. (Click code to copy)</p>
+                    <pre class="copyable" title="Click code to copy!" onclick="copyToClipboard('client = Filchatter()\nclient.set_api_key(\&quot;api_key\&quot;)')"><code class="language-c">client = Filchatter()
+client.set_api_key("api_key")</code></pre>
+                    <p></p>
+                    <!--<p>get_api_key() method requires String type name value as first parameter. We expect it as String type value not empty. If you provide name with empty String, you may get error json.</p>
+                    <p>get_api_key() method returns json type api key looks as follows:</p>
+                    <code>
+                        {<br>
+                            "api_key": "some value of key"<br>
+                        }<br>
+                    </code>
+                    <p></p>
+                    <p>Or you get error looks as follows:</p>
+                    <code>
+                        {<br>
+                            "error": "Name not provided"<br>
+                        }<br>
+                    </code>
+                    <br>-->
+                    <p></p>
+                    <hr>
+                    <p>5. Filter chat with send_json_request() mehtod. (Click code to copy)</p>
+                    <pre class="copyable" title="Click code to copy!" onclick="copyToClipboard('client = Filchatter()\nclient.set_api_key(api_key)\nchat = \&quot;Hello World!\&quot;\nfilter_result_json = client.send_json_request(chat)\nprint(filter_result_json.json()[\&quot;result\&quot;])')"><code class="language-c">client = Filchatter()
+client.set_api_key(api_key)
+chat = "Hello World!"
+filter_result_json = client.send_json_request(chat)
+print(filter_result_json.json()['result'])</code></pre>
+                    <p></p>
+                    <p>send_json_request() method requires String type value as first parameter. And then return json type result looks as follows:</p>
+                    <pre><code class="language-c">{
+    "result": "some value of result"
+}</code></pre>                                                                 
+                    <p></p>
+                    <p>If you use invalid api key, may get error looks as follows:</p>
+                    <pre><code class="language-c">{
+    "error": "Invalid api_key"
+}</code></pre>
+                </h4>
+            </div>
+            <hr class="hr1">
+            <div>
+                <h2>Methods</h2>
+                <h4>
+                    <p>This part describes all the methods we provide. Instance of Filchatter() can use this methods.</p>
+                </h4>
+                <p></p>
+                <hr>
+                <h3>1. set_api_key</h3>
+                <h4>
+                    <pre class="copyable" title="Click code to copy!" onclick="copyToClipboard('set_api_key(String api_key)')"><code class="language-c">set_api_key(String api_key)</code></pre>
+                    <p>Set API key of instance to first parameter</p>
+                </h4>
+                <p></p>
+                <hr>
+                <h3>2. get_api_key</h3>
+                <h4>
+                    <pre class="copyable" title="Click code to copy!" onclick="copyToClipboard('get_api_key(String name)')"><code class="language-c">get_api_key(String name)</code></pre>
+                    <p>It returns the API key created with the first parameter. If you send empty String name, you may get error looks as follow:</p>
+                    <pre><code class="language-c">{
+    "error": "Name not provided"
+}</code></pre>
+                </h4>
+                <p></p>
+                <hr>
+                <h3>3. send_json_request</h3>
+                <h4>
+                    <pre class="copyable" title="Click code to copy!" onclick="copyToClipboard('send_json_request(String chat, Integer moderation_option)')"><code class="language-c">send_json_request(String chat, Integer moderation_option)</code></pre>
+                    <p>It receive first parameter and modify it with Chat GPT. And return json data looks as follow:</p>
+                    <pre><code class="language-c">{
+    "result": "some value of result"
+}</code></pre>
+                    <p>If your instance of Filchatter is set with an incorrect API key, you may get error looks as follow:</p>
+                    <pre><code class="language-c">{
+    "error": "Invalid api_key"
+}</code></pre>
+                    <p>You can send optional parameter as second parameter. It's default value is 0, that is use API for prompt mode. If you set this 1, you can use moderation mode and return json data looks as follow:</p>
+                    <pre><code class="language-c">{
+    'result': True,
+    'result_dict': {
+        'harassment': False,
+        'harassment_threatening': False,
+        'hate': False,
+        'hate_threatening': False,
+        'self_harm': False,
+        'self_harm_instructions': False,
+        'self_harm_intent': False,
+        'sexual': False,
+        'sexual_minors': False,
+        'violence': False,
+        'violence_graphic': False,
+        'self-harm': False,
+        'sexual/minors': False,
+        'hate/threatening': False,
+        'violence/graphic': False,
+        'self-harm/intent': False,
+        'self-harm/instructions': False,
+        'harassment/threatening': False
+    }
+}</code></pre>
+                </h4>
+                <p></p>
+            </div>
+        </main>
+        <a href="/documents/kor" id="korean-button">한국어</a>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-c.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    </body>
+</html>
