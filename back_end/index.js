@@ -5,7 +5,7 @@ const app = express();
 
 app.use((req, res, next) => {
   const corsWhitelist = [
-      "http://ec2-43-201-46-225.ap-northeast-2.compute.amazonaws.com:3000","http://localhost:3000"
+      "https://web-chattingroom-1272llx2n6xjr.sel5.cloudtype.app","http://localhost:3000"
   ];
   if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
       res.header('Access-Control-Allow-Origin', req.headers.origin);
@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 const server = require("http").Server(app);
 const io = require("socket.io")(server,{
   cors:{
-    origin : ["http://ec2-43-201-46-225.ap-northeast-2.compute.amazonaws.com:3000","http://localhost:3000"],
+    origin : ["https://web-chattingroom-1272llx2n6xjr.sel5.cloudtype.app","http://localhost:3000"],
     allowedHeaders: ["my-custom-header"],
     credentials: true
   }
