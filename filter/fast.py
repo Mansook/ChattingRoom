@@ -254,3 +254,8 @@ async def generate(request: Request):
 def handle_documents_kor(request: Request):
     return templates.TemplateResponse("kor.html", {"request": request})
 # ================================ server run ==========================================
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("fast:app", host="0.0.0.0", port=4440, reload=True)
