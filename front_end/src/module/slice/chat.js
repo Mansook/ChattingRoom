@@ -33,6 +33,11 @@ const findInDicSaga = function* (action) {
         ...action.payload
       }));
     }
+  else{
+    yield put(setInputWord({
+      ...action.payload
+    }))
+  }
 };
 
 export function* findWordSaga() {
