@@ -38,9 +38,7 @@ const ChatContainer = () => {
 
   useEffect(() => {
     if (name) {
-      socket.on("my socket id", (data) => {
-        dispatch(socketLogged({ name: name, id: data.socketId }));
-      });
+      console.log("로그인:" + name );
       socket.emit("enter chatroom", name);
     }
   }, [name, dispatch]);
@@ -60,7 +58,7 @@ const ChatContainer = () => {
   };
 
   useEffect(() => {
-
+    
     socket.on("member update", (data) => {
       dispatch(updateMember(data));
     });

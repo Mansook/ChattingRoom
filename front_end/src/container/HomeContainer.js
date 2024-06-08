@@ -1,15 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Home.css'; // CSS 파일을 임포트합니다.
-
+import { useDispatch, useSelector } from "react-redux";
+import { socket } from "../socket/socket";
+import {
+  receiveChat,
+  selectChatList,
+  selectError,
+  selectInputWord,
+  selectMember,
+  selectSocketId,
+  socketLogged,
+  updateMember,
+  selectOption,
+  changeOption,
+} from "../module/slice/chat";
 const Home = () => {
   const [id, setId] = useState('');
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const handleChange = (event) => {
     setId(event.target.value);
   };
-
+  useEffect(()=>{
+    socket.on("my socket id", (data) => {
+      console.log(data);
+      dispatch(socketLogged({id: data.socketId }));
+    });
+  },[])
   const handleSubmit = (event) => {
     event.preventDefault();
     // 로그 추가

@@ -9,3 +9,4 @@ export const socket = io("https://port-0-chatserver-1272llx2n6xjr.sel5.cloudtype
         "my-custom-header": "abcd"
     }
 });
+
