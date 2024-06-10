@@ -3,6 +3,7 @@ import "../chat.css";
 
 const Chat = ({ name, error, socketId, chatList, onSend ,member,onChangeOption}) => {
   const [write, setWrite] = useState("");
+  const [opt,setOpt]=useState(1);
   const [choice,setchoice]=useState(["필터링 없음","욕설을 아예 보지않습니다","욕설을 ***으로 전환합니다","욕설을 순화시킵니다"])
   useEffect(() => {
     messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -19,6 +20,7 @@ const Chat = ({ name, error, socketId, chatList, onSend ,member,onChangeOption})
   };
 
   const handleOptionClick = (option) => {
+    setOpt(option);
     onChangeOption(option);
     closeModal();
   };
@@ -61,12 +63,12 @@ const Chat = ({ name, error, socketId, chatList, onSend ,member,onChangeOption})
       <button onClick={() => { submit(); } }>전송</button>
     </div>
     <div class="option">
-    <button onClick={openModal}>필터링 설정 열기</button>
+    <button onClick={openModal}>필터링 설정 열기</button><h3><div>현재 옵션 {opt}</div></h3>
     </div>
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>설정</h2>
+            <h2>설정<div>  현재 옵션 :  {opt}</div></h2>
             <ul>
               {[1, 2, 3, 4].map((option) => (
                 <li key={option} onClick={() => handleOptionClick(option)}>
