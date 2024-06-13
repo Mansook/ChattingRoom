@@ -1,5 +1,8 @@
 body{
   -ms-overflow-style: none;
+  height: 100%; /* 부모 요소의 높이를 100%로 설정 */
+  margin: 0;
+  padding: 0;
   }
   
  ::-webkit-scrollbar {
@@ -17,7 +20,7 @@ body{
   flex-grow: 1;
   background-color: #fff;
   border-radius: 8px;
-  height: 400px;
+  height: 66vh; /* 화면 높이의 80%로 설정 */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow-y: auto; /* 수직 스크롤이 필요할 때만 나타나도록 설정 */
   -ms-overflow-style: none;
@@ -57,7 +60,7 @@ body{
   display: flex;
 }
 .input-box, .participants {
-  margin-top: 20px;
+  margin-top: 5px;
   display: flex; /* 채팅창과 입력창, 참여자 목록 사이에 여백 추가 */
 }
 

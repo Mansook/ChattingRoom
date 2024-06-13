@@ -19,6 +19,8 @@ const Home = () => {
   const [id, setId] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [error,setError]=useState('');
+
   const handleChange = (event) => {
     setId(event.target.value);
   };
@@ -31,6 +33,17 @@ const Home = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // 로그 추가
+    if(id.length<1){
+      setError("아이디가 너무 짧아요")
+      return;
+    }
+    if(id.length>6){
+      setError("아이디가 너무 길어요");
+      return;
+    }
+    
+
+
     if (id) {
       console.log('Submitted ID:', id);
       navigate(`/chat?name=${id}`);
@@ -50,6 +63,16 @@ const Home = () => {
           placeholder="이름" 
           className="home-input"
         />
+       <div style={{
+  marginBottom: "5px", // 속성명을 camelCase로 작성
+  padding: "0",
+  fontSize: "18px", // 속성명을 camelCase로 작성
+  fontWeight: "bold", // 속성명을 camelCase로 작성
+  color: "steelblue"
+}}>
+  {error}
+</div>
+
         <button type="submit" className="home-button">입장</button>
       </form>
     </div>

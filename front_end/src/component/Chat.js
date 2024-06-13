@@ -80,14 +80,8 @@ const Chat = ({ name, error, socketId, chatList, onSend ,member,onChangeOption})
           </div>
         </div>
       )}
-    <h2>참가자</h2>
-    <div class="participants">
-      <ul>
-        {member.map((c) => (
-          <li className="participant">{c.name}</li>
-        ))}
-      </ul>
-    </div>
+    <div class="bb">참가자 {member.length}명 </div>
+   
   </div>
   );
 };

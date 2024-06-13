@@ -2,14 +2,15 @@ import ChatContainer from "./container/ChatContainer";
 import ApiTest from "./container/ApiTest";
 import HomeContainer from "./container/HomeContainer";
 import { Routes, Route,Navigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import styled from 'styled-components';
+
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/home" />} />
-      <Route path="/chat" element={<ChatContainer />} />
-      <Route path="/home" element={<HomeContainer/>}/>
-    </Routes>
+      <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/chat" element={<ChatContainer />} />
+        <Route path="/home" element={<HomeContainer/>}/>
+      </Routes>
   );
 }
 
