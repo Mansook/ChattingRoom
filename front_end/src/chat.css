@@ -15,7 +15,9 @@ body{
   max-width: 800px;
   margin: 20px auto;
 }
-
+.bb{
+  font-weight: 600; 
+}
 .chat-box {
   flex-grow: 1;
   background-color: #fff;

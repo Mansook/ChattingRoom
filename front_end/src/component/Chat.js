@@ -29,10 +29,13 @@ const Chat = ({ name, error, socketId, chatList, onSend ,member,onChangeOption})
     setWrite(e.target.value);
   };
   const submit=()=>{
-    onSend(write); setWrite("");
+    if(write.length>0){
+    onSend(write);
+    setWrite("");
+    }
   }
   const activeEnter = (e) => {
-    if(e.key === "Enter") {
+    if(e.key === "Enter" && write.length>0) {
       submit();
     }
   }
@@ -81,7 +84,7 @@ const Chat = ({ name, error, socketId, chatList, onSend ,member,onChangeOption})
         </div>
       )}
     <div class="bb">참가자 {member.length}명 </div>
-   
+    
   </div>
   );
 };
